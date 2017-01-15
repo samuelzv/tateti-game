@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": false,
+    "removeComments": true,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "pretty": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": false,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "typeRoots" : [
+      "./node_modules/@types"
+    ]
+  },
+  "include": [
+    "main.ts",
+    "main.module.ts",
+    "app/**/*.ts",
+    "common/**/*.ts",
+    "shims.d.ts",
+    "node_modules/@types"
+  ],
+  "exclude": [
+    ".tmp",
+    "main.aot.ts",
+    "node_modules"
+  ],
+  "compileOnSave": false
+}
