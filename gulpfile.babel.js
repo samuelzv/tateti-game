@@ -33,6 +33,7 @@ gulp.task('dev', 'Build application in development mode', cb => {
   runSequence(
     'cleanup',
      'dev.build',
+     'dev.watch',
     cb
   );
 });
