@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'tate-welcome',
@@ -7,6 +8,11 @@ import { Component } from '@angular/core';
     styleUrls: ['welcome.component.css']
 })
 export class WelcomeComponent  {
-    constructor() {}
+    constructor(public router: Router) {
+    }
+
+    play() {
+        this.router.navigate(['play']);
+    }
 }
 

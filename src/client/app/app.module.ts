@@ -7,10 +7,12 @@ import { MaterialModule } from '@angular/material';
 import { AppComponent }  from './app.component';
 import { RegistrationComponent } from './registration/components/registration.component';
 import { WelcomeComponent } from './welcome/components/welcome.component';
+import { PlayComponent } from './play/components/play.component';
+import { LoginService } from './common/services/loggin.service';
 
 const appRoutes: Routes = [
   {
-    path: 'registration',
+    path: 'register',
     component: RegistrationComponent
   },
   {
@@ -20,10 +22,17 @@ const appRoutes: Routes = [
   {
     path: '',
     redirectTo: '/welcome', pathMatch: 'full'
+  },
+  {
+    path: 'play',
+    component: PlayComponent
   }
 ];
 
 @NgModule({
+  providers: [
+    LoginService
+  ],
   imports:      [
     BrowserModule ,
     MaterialModule.forRoot(),
@@ -32,7 +41,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     RegistrationComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    PlayComponent
   ],
   bootstrap:    [ AppComponent ]
 })
