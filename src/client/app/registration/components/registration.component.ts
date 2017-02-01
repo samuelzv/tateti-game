@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginService } from './../../common/services/loggin.service';
 
 @Component({
     selector: 'tate-registration',
@@ -7,7 +9,15 @@ import { Component } from '@angular/core';
     styleUrls: ['registration.component.css']
 })
 export class RegistrationComponent  {
-    constructor() {
+    username: string;
+
+    constructor(private loginService: LoginService, private router: Router) {
     }
+
+    register() {
+        this.loginService.login(this.username)
+          .then((success)=> this.router.navigate(['play']));
+    }
+
 }
 

@@ -1,1 +1,9 @@
-<div>Register</div>
+<div class="tate-registration">
+    <h1>What is your name?</h1>
+    <md-input-container class="input-name">
+        <input mdInput placeholder="Your name" [(ngModel)]="username">
+    </md-input-container>
+    <div class="footer">
+        <button md-raised-button class="md-primary" [disabled]="!username" (click)="register()">Let's play</button>
+    </div>
+</div>

@@ -16,6 +16,7 @@ export class LoginService {
 
   login(username) {
     this.storage.setItem(USER_NAME_KEY, username)
+    return Promise.resolve(true);
   }
 
   logout() {
