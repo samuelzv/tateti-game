@@ -1,0 +1,12 @@
+<md-sidenav-container>
+    <md-sidenav #start (open)="closeStartButton.focus()" opened="false">
+        Start Sidenav.
+        <br>
+        <button md-button #closeStartButton (click)="start.close()">Close</button>
+    </md-sidenav>
+    <div class="my-content">
+        My regular content. This will be moved into the proper DOM at runtime.
+        <button md-button (click)="start.open()">Open start sidenav</button>
+        <router-outlet></router-outlet>
+    </div>
+</md-sidenav-container>
