@@ -10,6 +10,7 @@ import { RegistrationComponent } from './registration/components/registration.co
 import { WelcomeComponent } from './welcome/components/welcome.component';
 import { PlayComponent } from './play/components/play.component';
 import { LoginService } from './common/services/loggin.service';
+import { PlayService } from './common/services/play.service';
 
 const appRoutes: Routes = [
   {
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
 
 @NgModule({
   providers: [
-    LoginService
+    LoginService,
+    PlayService
   ],
   imports:      [
     BrowserModule,
