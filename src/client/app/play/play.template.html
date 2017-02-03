@@ -1,0 +1,16 @@
+<md-card class="tateti-play">
+
+    <md-card-title>{{titleStatus}}</md-card-title>
+    <md-card-content class="">
+        <md-grid-list cols="3" [rowHeight]="fixedRowHeight" gutterSize="4px">
+            <md-grid-tile *ngFor="let tile of game?.tiles; let tileIndex = index"
+                          (click)="selectTile(tileIndex)" [style.background]="'lightblue'">
+                <div *ngIf="tile">{{tile}}</div>
+            </md-grid-tile>
+        </md-grid-list>
+    </md-card-content>
+
+    <md-card-actions>
+        <p>The score here</p>
+    </md-card-actions>
+</md-card>

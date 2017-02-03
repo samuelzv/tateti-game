@@ -5,12 +5,13 @@ import { NgModule }      from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 
-import { AppComponent }  from './app.component';
-import { RegistrationComponent } from './registration/components/registration.component';
-import { WelcomeComponent } from './welcome/components/welcome.component';
-import { PlayComponent } from './play/components/play.component';
-import { LoginService } from './common/services/loggin.service';
-import { PlayService } from './common/services/play.service';
+import { MainComponent }  from './main.component';
+import { RegistrationComponent } from './../registration/registration.component';
+import { WelcomeComponent } from './../welcome/welcome.component';
+import { PlayComponent } from './../play/play.component';
+import { LoginService } from './../shared/loggin.service';
+import { PlayService } from './../play/play.service';
+import { BasicAlgorithmService } from './../play/basic-algorithm.service';
 
 const appRoutes: Routes = [
   {
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
 @NgModule({
   providers: [
     LoginService,
-    PlayService
+    PlayService,
+    BasicAlgorithmService
   ],
   imports:      [
     BrowserModule,
@@ -43,13 +45,13 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   declarations: [
-    AppComponent,
+    MainComponent,
     RegistrationComponent,
     WelcomeComponent,
     PlayComponent
   ],
-  bootstrap:    [ AppComponent ]
+  bootstrap:    [ MainComponent ]
 })
-export class AppModule {
+export class MainModule {
   constructor() {}
 }

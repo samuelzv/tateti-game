@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from './../../common/services/loggin.service';
+import { LoginService } from './../shared/loggin.service';
 
 @Component({
     selector: 'tate-registration',
