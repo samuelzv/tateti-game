@@ -19,7 +19,8 @@ export class PlayComponent  implements OnInit {
     fixedRowHeight = 100;
     gameSubscription: any;
     game: Game;
-    snackBarRef: MdSnackBarRef;
+    gameOver: boolean;
+    snackBarRef: MdSnackBarRef<any>;
 
     constructor(public loginService: LoginService,
                 public router: Router,
@@ -49,11 +50,7 @@ export class PlayComponent  implements OnInit {
     onGameUpdate(game: Game) {
         this.game = game;
 
-        if(this.game.playState === PlayState.GAME_OVER) {
-            this.titleStatus = 'Game Over!'
-        }else {
-            this.titleStatus = (this.game.turn === Contender.COMPUTER) ? 'Computer thinking' : 'Your turn';
-        }
+        this.titleStatus = (this.game.turn === Contender.COMPUTER) ? 'Computer thinking' : 'Your turn';
 
         let toastMessage = '';
         switch(this.game.winner) {
@@ -70,12 +67,15 @@ export class PlayComponent  implements OnInit {
                 break;
         }
         if(this.game.winner !== Winner.NOT_YET) {
+            this.titleStatus = 'Game Over!';
+            this.gameOver = true;
             this.snackBarRef =this.snackBar.open(toastMessage);
         }
     }
 
     newGame() {
         this.playService.start();
+        this.gameOver = false;
         if(this.snackBarRef) {
             this.snackBarRef.dismiss();
         }

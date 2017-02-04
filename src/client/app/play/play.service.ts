@@ -10,12 +10,14 @@ import {
   PlayItemValue,
   Winner
 } from './../shared/constants';
+import { Tile } from './../shared/interfaces';
 
 @Injectable()
 export class PlayService implements OnInit {
   private subject: Subject<Game>;
   private state: Game;
   private algorithm: GameAlgorithm;
+  private nextComputerMovement: number;
 
   constructor() {
     this.algorithm = new BasicAlgorithmService();
@@ -24,8 +26,10 @@ export class PlayService implements OnInit {
   }
 
   getInitialState(): Game {
+    let arr = Array(9).fill(null);
+
     let game: Game = {
-      tiles: Array(9).fill(PlayItemValue.UNSET),
+      tiles: arr.map(()=><Tile>{value:PlayItemValue.UNSET, isWinnerTile: false}),
       turn: Contender.PERSON,
       playState: PlayState.PLAYING,
       winner: Winner.NOT_YET
@@ -35,16 +39,13 @@ export class PlayService implements OnInit {
   }
 
   newGame(): Subject<Game> {
-    if(this.subject) {
-      debugger;
-      this.subject.unsubscribe();
-    }
-
     this.subject = new Subject();
     return this.subject;
   }
 
   start(): void {
+    if(this.nextComputerMovement) { clearTimeout(this.nextComputerMovement); }
+
     this.state = this.getInitialState();
     this.subject.next(this.state);
   }
@@ -55,31 +56,34 @@ export class PlayService implements OnInit {
   }
 
 
-  checkIfWin(tiles:any, turn:any) {
+  checkIfWin(tiles:Tile[], turn:any): number[] {
     let searchedValue = (turn === Contender.COMPUTER) ? PlayItemValue.COMPUTER : PlayItemValue.PERSON;
     let matches = 0;
+    let winnerTiles: number[] = [];
 
     for(let index=0; index < tiles.length; index++) {
 
-      if (tiles[index] === searchedValue) {
+      if (tiles[index].value === searchedValue) {
+        winnerTiles.push(index);
         matches += 1;
       }
       if (matches === 3) {
-        return true;
+        return winnerTiles;
       }
 
       if ((index + 1) % 3 === 0) {
         matches = 0;
+        winnerTiles = [];
       }
     }
 
-    return false;
+    return [];
   }
 
   selectTile(tileIndex: number): void {
     this.takeTile(tileIndex, PlayItemValue.PERSON);
 
-    setTimeout(()=> {
+    this.nextComputerMovement = setTimeout(()=> {
       if(this.state.playState !== PlayState.GAME_OVER) {
         this.takeTile(this.algorithm.chooseTile(this.state), PlayItemValue.COMPUTER);
       }
@@ -89,14 +93,19 @@ export class PlayService implements OnInit {
 
   takeTile(tileIndex, value: string) {
     let winner:Winner = this.state.winner;
-    let tiles = [].concat(this.state.tiles);
+    let tiles: Tile[] = [].concat(this.state.tiles);
     let turn = this.state.turn;
     let playState: PlayState;
 
-    tiles[tileIndex] = value;
+    tiles[tileIndex].value = value;
 
-    if(this.checkIfWin(tiles, turn)) {
+    let winnerTiles: number[] = this.checkIfWin(tiles, turn);
+    if(winnerTiles.length) {
+      // mark winner tiles
+      winnerTiles.forEach((index: number)=> tiles[index].isWinnerTile = true );
+      // who is the winner
       winner = (turn === Contender.PERSON) ? Winner.PERSON : Winner.COMPUTER;
+      // game over
       playState = PlayState.GAME_OVER;
     } else {
       if(this.isAllTilesTaken(tiles)) {
@@ -109,8 +118,8 @@ export class PlayService implements OnInit {
     this.setState({tiles, playState, turn, winner});
   }
 
-  isAllTilesTaken(tiles:any): boolean {
-    let unsetTiles = tiles.filter(tile => tile === PlayItemValue.UNSET );
+  isAllTilesTaken(tiles:Tile[]): boolean {
+    let unsetTiles = tiles.filter((tile:Tile) => tile.value === PlayItemValue.UNSET );
     return unsetTiles.length == 0;
   }
 

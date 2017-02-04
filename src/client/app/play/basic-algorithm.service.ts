@@ -1,4 +1,4 @@
-import { Game, GameAlgorithm } from '../shared/interfaces';
+import { Game, GameAlgorithm, Tile } from '../shared/interfaces';
 import { PlayItemValue } from '../shared/constants';
 
 export class BasicAlgorithmService  implements GameAlgorithm   {
@@ -7,8 +7,8 @@ export class BasicAlgorithmService  implements GameAlgorithm   {
   public chooseTile(game:Game): number {
     let availableIndexes = [];
 
-    game.tiles.forEach((tile, index)=> {
-      if(tile === PlayItemValue.UNSET) {
+    game.tiles.forEach((tile: Tile, index)=> {
+      if(tile.value === PlayItemValue.UNSET) {
         availableIndexes.push(index);
       }
     });

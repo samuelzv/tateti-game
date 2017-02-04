@@ -4,7 +4,27 @@
 .tateti-play {
   width: 300px;
 
-  md-grid-tile {
+  .board__tile {
+    align-items: center;
+    display: flex;
     font-size: 2em;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
   }
+
+    .board__tile--not-used {
+      cursor: pointer;
+    }
+
+    .board__tile--used {
+      cursor: not-allowed;
+    }
+
+    .board__tile--winner {
+      color: red
+    }
+
+
+
 }

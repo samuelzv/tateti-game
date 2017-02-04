@@ -5,7 +5,7 @@ import {
 } from './constants';
 
 export interface Game {
-  tiles: string[],
+  tiles: Tile[],
   turn: Contender,
   playState: PlayState
   winner: Winner
@@ -19,4 +19,9 @@ export interface Score {
   username: string,
   person: number,
   computer: number
+}
+
+export interface Tile {
+  value: string,
+  isWinnerTile: boolean
 }

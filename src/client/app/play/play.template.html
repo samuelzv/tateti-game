@@ -5,7 +5,8 @@
         <md-grid-list cols="3" [rowHeight]="fixedRowHeight" gutterSize="4px">
             <md-grid-tile *ngFor="let tile of game?.tiles; let tileIndex = index"
                           (click)="selectTile(tileIndex)" [style.background]="'lightblue'">
-                <div *ngIf="tile">{{tile}}</div>
+                <div class="board__tile"
+                     [ngClass]="{'board__tile--not-used': !tile.value, 'board__tile--used': tile.value || gameOver, 'board__tile--winner': tile.isWinnerTile }" >{{tile.value}}</div>
             </md-grid-tile>
         </md-grid-list>
     </md-card-content>
