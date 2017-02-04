@@ -4,27 +4,30 @@
 .tateti-play {
   width: 300px;
 
-  .board__tile {
-    align-items: center;
-    display: flex;
-    font-size: 2em;
-    height: 100%;
-    justify-content: center;
-    width: 100%;
+  .board {
+    background: #000;
   }
 
-    .board__tile--not-used {
-      cursor: pointer;
+    .board__tile {
+      align-items: center;
+      background: #fff;
+      display: flex;
+      font-size: 3em;
+      height: 100%;
+      justify-content: center;
+      width: 100%;
     }
 
-    .board__tile--used {
-      cursor: not-allowed;
-    }
+      .board__tile--not-used {
+        cursor: pointer;
+      }
 
-    .board__tile--winner {
-      color: red
-    }
+      .board__tile--used {
+        cursor: not-allowed;
+      }
 
-
+      .board__tile--winner {
+        color: red
+      }
 
 }
