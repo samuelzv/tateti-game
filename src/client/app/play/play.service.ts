@@ -20,16 +20,18 @@ export class PlayService implements OnInit {
   private nextComputerMovement: any;
 
   constructor() {
+    this.subject = new Subject();
     this.algorithm = new BasicAlgorithmService();
   }
 
   ngOnInit() {
   }
 
-  getInitialState(): Game {
+  getInitialState(username: string): Game {
     let arr = Array(9).fill(null);
 
     let game: Game = {
+      username,
       tiles: arr.map(()=><Tile>{value:PlayItemValue.UNSET, isWinnerTile: false}),
       turn: Contender.PERSON,
       playState: PlayState.PLAYING,
@@ -39,15 +41,14 @@ export class PlayService implements OnInit {
     return game;
   }
 
-  newGame(): Subject<Game> {
-    this.subject = new Subject();
+  getGameSubscription(): Subject<Game> {
     return this.subject;
   }
 
-  start(): void {
+  start(username: string): void {
     if(this.nextComputerMovement) { clearTimeout(this.nextComputerMovement); }
 
-    this.state = this.getInitialState();
+    this.state = this.getInitialState(username);
     this.subject.next(this.state);
   }
 

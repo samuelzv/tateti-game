@@ -21,6 +21,7 @@ export class PlayComponent  implements OnInit {
     game: Game;
     gameOver: boolean;
     snackBarRef: MdSnackBarRef<any>;
+    username: string;
 
     constructor(public loginService: LoginService,
                 public router: Router,
@@ -32,13 +33,16 @@ export class PlayComponent  implements OnInit {
         if(!this.loginService.isLoggedin()) {
             this.router.navigate(['register']);
         }
-        this.gameSubscription = this.playService.newGame();
+        this.username = this.loginService.getUsername();
+
+        this.gameSubscription = this.playService.getGameSubscription();
+
 
         this.gameSubscription.subscribe((game: Game)=> {
             this.onGameUpdate(game);
         });
 
-        this.playService.start();
+        this.newGame();
     }
 
     selectTile(tileIndex: number) {
@@ -74,11 +78,13 @@ export class PlayComponent  implements OnInit {
     }
 
     newGame() {
-        this.playService.start();
+        // cleanup
         this.gameOver = false;
         if(this.snackBarRef) {
             this.snackBarRef.dismiss();
         }
+
+        this.playService.start(this.username);
     }
 
 

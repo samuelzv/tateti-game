@@ -5,6 +5,7 @@ import {
 } from './constants';
 
 export interface Game {
+  username: string,
   tiles: Tile[],
   turn: Contender,
   playState: PlayState

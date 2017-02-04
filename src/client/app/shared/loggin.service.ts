@@ -11,12 +11,16 @@ export class LoginService {
   }
 
   isLoggedin() {
-    return this.storage.getItem(USER_NAME_KEY) ? true : false;
+    return this.getUsername() ? true : false;
   }
 
   login(username) {
-    this.storage.setItem(USER_NAME_KEY, username)
+    this.storage.setItem(USER_NAME_KEY, username);
     return Promise.resolve(true);
+  }
+
+  getUsername(): string {
+    return this.storage.getItem(USER_NAME_KEY);
   }
 
   logout() {
