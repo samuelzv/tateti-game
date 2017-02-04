@@ -42,33 +42,33 @@ export class PlayComponent  implements OnInit {
     }
 
     selectTile(tileIndex: number) {
-        if(this.game.playState !== PlayState.GAME_OVER) {
+        if(this.game.playState === PlayState.PLAYING && this.game.turn === Contender.PERSON) {
            this.playService.selectTile(tileIndex);
         }
     }
 
     onGameUpdate(game: Game) {
         this.game = game;
-
         this.titleStatus = (this.game.turn === Contender.COMPUTER) ? 'Computer thinking' : 'Your turn';
 
-        let toastMessage = '';
-        switch(this.game.winner) {
-            case Winner.COMPUTER:
-                toastMessage = 'You lose';
-                break;
-
-            case Winner.PERSON:
-                toastMessage = 'You win!';
-
-                break;
-            case Winner.TIE:
-                toastMessage = 'Tie';
-                break;
-        }
         if(this.game.winner !== Winner.NOT_YET) {
             this.titleStatus = 'Game Over';
             this.gameOver = true;
+
+            let toastMessage = '';
+            switch(this.game.winner) {
+                case Winner.COMPUTER:
+                    toastMessage = 'You lose';
+                    break;
+
+                case Winner.PERSON:
+                    toastMessage = 'You win!';
+
+                    break;
+                case Winner.TIE:
+                    toastMessage = 'Tie';
+                    break;
+            }
             this.snackBarRef =this.snackBar.open(toastMessage);
         }
     }

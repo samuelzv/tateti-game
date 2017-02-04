@@ -89,7 +89,7 @@ export class PlayService implements OnInit {
     let winner:Winner = this.state.winner;
     let tiles: Tile[] = [].concat(this.state.tiles);
     let turn = this.state.turn;
-    let playState: PlayState;
+    let playState: PlayState = this.state.playState;
 
     tiles[tileIndex].value = value;
 
