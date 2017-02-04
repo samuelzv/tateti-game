@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {MdSnackBar} from '@angular/material';
+import {MdSnackBar, MdSnackBarRef} from '@angular/material';
 
 import { LoginService } from './../shared/loggin.service';
 import { PlayService } from './play.service';
@@ -19,6 +19,7 @@ export class PlayComponent  implements OnInit {
     fixedRowHeight = 100;
     gameSubscription: any;
     game: Game;
+    snackBarRef: MdSnackBarRef;
 
     constructor(public loginService: LoginService,
                 public router: Router,
@@ -54,20 +55,30 @@ export class PlayComponent  implements OnInit {
             this.titleStatus = (this.game.turn === Contender.COMPUTER) ? 'Computer thinking' : 'Your turn';
         }
 
+        let toastMessage = '';
         switch(this.game.winner) {
             case Winner.COMPUTER:
-                this.snackBar.open('Computer wins!');
+                toastMessage = 'Computer wins!';
                 break;
 
             case Winner.PERSON:
-                this.snackBar.open('You win!');
-                break;
+                toastMessage = 'You win!';
 
+                break;
             case Winner.TIE:
-                this.snackBar.open('Tie!!');
+                toastMessage = 'Tie!!';
                 break;
         }
+        if(this.game.winner !== Winner.NOT_YET) {
+            this.snackBarRef =this.snackBar.open(toastMessage);
+        }
+    }
 
+    newGame() {
+        this.playService.start();
+        if(this.snackBarRef) {
+            this.snackBarRef.dismiss();
+        }
     }
 
 
