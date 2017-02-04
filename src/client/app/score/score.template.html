@@ -1,0 +1,17 @@
+<div class="tate-score">
+    <div class="results">
+        <div class="results__header">
+            <div>-</div>
+            <div>Won</div>
+            <div>Tied</div>
+            <div>Lost</div>
+        </div>
+
+        <div *ngFor="let record of score" class="results__record" >
+            <div>{{record.username}}</div>
+            <div>{{record.won}}</div>
+            <div>{{record.tied}}</div>
+            <div>{{record.lost}}</div>
+        </div>
+    </div>
+</div>

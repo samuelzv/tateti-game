@@ -3,6 +3,7 @@ import { Subject } from 'rxjs/Subject';
 
 import { Game, GameAlgorithm } from '../shared/interfaces';
 import { BasicAlgorithmService } from './basic-algorithm.service';
+import { ScoreService } from '../shared/score.service';
 
 import {
   Contender,
@@ -19,7 +20,7 @@ export class PlayService implements OnInit {
   private algorithm: GameAlgorithm;
   private nextComputerMovement: any;
 
-  constructor() {
+  constructor(private scoreService: ScoreService) {
     this.subject = new Subject();
     this.algorithm = new BasicAlgorithmService();
   }
@@ -64,7 +65,7 @@ export class PlayService implements OnInit {
     let winCombinations = [
       [0,1,2],[3,4,5],[6,7,8], /*horizontal*/
       [0,3,6],[1,4,7],[2,5,8], /* vertical */
-      [0,4,8], [2,4,6] /* diagonal*/
+      [0,4,8], [2,4,6]         /* diagonal*/
     ];
 
     let searchedValue = (turn === Contender.COMPUTER) ? PlayItemValue.COMPUTER : PlayItemValue.PERSON;
@@ -102,10 +103,12 @@ export class PlayService implements OnInit {
       winner = (turn === Contender.PERSON) ? Winner.PERSON : Winner.COMPUTER;
       // game over
       playState = PlayState.GAME_OVER;
+      this.scoreService.increment(this.state.username, winner);
     } else {
       if(this.isAllTilesTaken(tiles)) {
         playState = PlayState.GAME_OVER;
         winner = Winner.TIE;
+        this.scoreService.increment(this.state.username, winner);
       }
       // move to nex turn
       turn = (turn === Contender.PERSON) ? Contender.COMPUTER : Contender.PERSON;

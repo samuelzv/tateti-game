@@ -16,13 +16,17 @@ export interface GameAlgorithm {
   chooseTile(game: Game): number
 }
 
-export interface Score {
-  username: string,
-  person: number,
-  computer: number
-}
 
 export interface Tile {
   value: string,
   isWinnerTile: boolean
 }
+
+export interface RecordScore {
+  username: string,
+  won: number,
+  tied: number,
+  lost: number
+}
+
+

@@ -5,13 +5,18 @@ import { NgModule }      from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 
+// components
 import { MainComponent }  from './main.component';
 import { RegistrationComponent } from './../registration/registration.component';
 import { WelcomeComponent } from './../welcome/welcome.component';
 import { PlayComponent } from './../play/play.component';
+import { ScoreComponent } from './../score/score.component';
+
+// services
 import { LoginService } from './../shared/loggin.service';
 import { PlayService } from './../play/play.service';
 import { BasicAlgorithmService } from './../play/basic-algorithm.service';
+import { ScoreService } from './../shared/score.service';
 
 const appRoutes: Routes = [
   {
@@ -36,7 +41,8 @@ const appRoutes: Routes = [
   providers: [
     LoginService,
     PlayService,
-    BasicAlgorithmService
+    BasicAlgorithmService,
+    ScoreService
   ],
   imports:      [
     BrowserModule,
@@ -48,7 +54,8 @@ const appRoutes: Routes = [
     MainComponent,
     RegistrationComponent,
     WelcomeComponent,
-    PlayComponent
+    PlayComponent,
+    ScoreComponent
   ],
   bootstrap:    [ MainComponent ]
 })
