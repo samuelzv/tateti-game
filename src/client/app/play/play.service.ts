@@ -17,11 +17,12 @@ export class PlayService implements OnInit {
   private subject: Subject<Game>;
   private state: Game;
   private algorithm: GameAlgorithm;
-  private nextComputerMovement: number;
+  private nextComputerMovement: any;
 
   constructor() {
     this.algorithm = new BasicAlgorithmService();
   }
+
   ngOnInit() {
   }
 
@@ -56,34 +57,27 @@ export class PlayService implements OnInit {
   }
 
 
-  checkIfWin(tiles:Tile[], turn:any): number[] {
+
+  checkIfWin(tiles:Tile[], turn:Contender): number[] {
+    let winnerCombination: number[];
+    let winCombinations = [
+      [0,1,2],[3,4,5],[6,7,8], /*horizontal*/
+      [0,3,6],[1,4,7],[2,5,8], /* vertical */
+      [0,4,8], [2,4,6] /* diagonal*/
+    ];
+
     let searchedValue = (turn === Contender.COMPUTER) ? PlayItemValue.COMPUTER : PlayItemValue.PERSON;
-    let matches = 0;
-    let winnerTiles: number[] = [];
-
-    for(let index=0; index < tiles.length; index++) {
-
-      if (tiles[index].value === searchedValue) {
-        winnerTiles.push(index);
-        matches += 1;
-      }
-      if (matches === 3) {
-        return winnerTiles;
-      }
-
-      if ((index + 1) % 3 === 0) {
-        matches = 0;
-        winnerTiles = [];
-      }
-    }
-
-    return [];
+    let win = winCombinations.some((combination: number[])=> {
+      winnerCombination = combination;
+      return combination.every((index:number)=> tiles[index].value === searchedValue);
+    });
+    return win ? winnerCombination : [];
   }
 
   selectTile(tileIndex: number): void {
     this.takeTile(tileIndex, PlayItemValue.PERSON);
 
-    this.nextComputerMovement = setTimeout(()=> {
+    this.nextComputerMovement =  setTimeout(()=> {
       if(this.state.playState !== PlayState.GAME_OVER) {
         this.takeTile(this.algorithm.chooseTile(this.state), PlayItemValue.COMPUTER);
       }

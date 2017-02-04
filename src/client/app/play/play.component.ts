@@ -55,7 +55,7 @@ export class PlayComponent  implements OnInit {
         let toastMessage = '';
         switch(this.game.winner) {
             case Winner.COMPUTER:
-                toastMessage = 'Computer wins!';
+                toastMessage = 'You lose';
                 break;
 
             case Winner.PERSON:
@@ -63,11 +63,11 @@ export class PlayComponent  implements OnInit {
 
                 break;
             case Winner.TIE:
-                toastMessage = 'Tie!!';
+                toastMessage = 'Tie';
                 break;
         }
         if(this.game.winner !== Winner.NOT_YET) {
-            this.titleStatus = 'Game Over!';
+            this.titleStatus = 'Game Over';
             this.gameOver = true;
             this.snackBarRef =this.snackBar.open(toastMessage);
         }
