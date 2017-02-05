@@ -3,7 +3,7 @@ import { Subject } from 'rxjs/Subject';
 
 import { Game, GameAlgorithm, Tile } from '../shared/models/index';
 import { BasicAlgorithmService } from './basic-algorithm.service';
-import { ScoreService } from '../shared/score.service';
+import { ScoreService } from '../shared/services/score.service';
 
 import {
   Contender,

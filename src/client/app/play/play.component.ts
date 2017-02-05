@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {MdSnackBar, MdSnackBarRef} from '@angular/material';
 
-import { LoginService } from './../shared/loggin.service';
+import { LoginService } from './../shared/services/loggin.service';
 import { PlayService } from './play.service';
 import { Contender, PlayState, Winner } from './../shared/constants';
 import { Game } from './../shared/models/index';

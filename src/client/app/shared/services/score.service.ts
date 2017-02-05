@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { Winner } from './../shared/constants';
-import { RecordScore } from './../shared/models/index';
+import { Winner } from './../constants';
+import { RecordScore } from './../models/record-score.model';
 import { StorageService } from './storage.service';
 
 const SCORE_KEY = 'score';

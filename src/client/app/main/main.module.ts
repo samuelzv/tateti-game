@@ -13,12 +13,12 @@ import { PlayComponent } from './../play/play.component';
 import { ScoreComponent } from './../score/score.component';
 
 // services
-import { LoginService } from './../shared/loggin.service';
+import { LoginService } from './../shared/services/loggin.service';
 import { PlayService } from './../play/play.service';
 import { BasicAlgorithmService } from './../play/basic-algorithm.service';
-import { ScoreService } from './../shared/score.service';
-import { StorageService } from './../shared/storage.service';
-import { LocalStorageService } from './../shared/local-storage.service';
+import { ScoreService } from './../shared/services/score.service';
+import { StorageService } from './../shared/services/storage.service';
+import { LocalStorageService } from './../shared/services/local-storage.service';
 
 const appRoutes: Routes = [
   {
