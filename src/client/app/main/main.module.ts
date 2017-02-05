@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule }      from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from '@angular/material';
+import { StoreModule } from '@ngrx/store';
 
 // components
 import { MainComponent }  from './main.component';
@@ -19,6 +20,9 @@ import { BasicAlgorithmService } from './../play/basic-algorithm.service';
 import { ScoreService } from './../shared/services/score.service';
 import { StorageService } from './../shared/services/storage.service';
 import { LocalStorageService } from './../shared/services/local-storage.service';
+
+// stores
+import { login } from './../shared/stores/loggin.store';
 
 const appRoutes: Routes = [
   {
@@ -52,7 +56,8 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     MaterialModule.forRoot(),
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    StoreModule.provideStore( { login } )
   ],
   declarations: [
     MainComponent,

@@ -23,6 +23,8 @@
       '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
       '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
+      '@ngrx/core': 'npm:@ngrx/core/bundles/core.umd.js',
+      '@ngrx/store': 'npm:@ngrx/store/bundles/store.umd.js',
       // other libraries
       'rxjs':'npm:rxjs',
       'hammerjs':'npm:hammerjs/hammer.js'

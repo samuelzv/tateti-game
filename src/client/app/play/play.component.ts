@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {MdSnackBar, MdSnackBarRef} from '@angular/material';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
-import { LoginService } from './../shared/services/loggin.service';
 import { PlayService } from './play.service';
 import { Contender, PlayState, Winner } from './../shared/constants';
-import { Game } from './../shared/models/index';
+import { Game, AppStore, LoginInfo } from './../shared/models/index';
+//import { LoginInfo } from './../shared/stores/loggin.store';
 
 
 @Component({
@@ -15,33 +17,38 @@ import { Game } from './../shared/models/index';
     styleUrls: ['play.component.css']
 })
 export class PlayComponent  implements OnInit {
+    loginInfo: LoginInfo;
     titleStatus: string;
     titleAction: string;
     fixedRowHeight = 100;
     gameSubscription: any;
     game: Game;
     snackBarRef: MdSnackBarRef<any>;
-    username: string;
     EnumPlayState: any = PlayState;
+    loginState: Observable<LoginInfo>;
 
-    constructor(public loginService: LoginService,
-                public router: Router,
+    constructor(public router: Router,
                 public playService: PlayService,
-                public snackBar: MdSnackBar) {
+                public snackBar: MdSnackBar,
+                private store: Store<AppStore>) {
+        this.loginState = store.select('login');
     }
 
     ngOnInit() {
-        if(!this.loginService.isLoggedin()) {
-            this.router.navigate(['register']);
-        }
-        this.username = this.loginService.getUsername();
-        this.gameSubscription = this.playService.getGameSubscription();
-
-        this.gameSubscription.subscribe((game: Game)=> {
-            this.onGameUpdate(game);
+        this.loginState.subscribe((loginInfo: LoginInfo)=> {
+            this.loginInfo = loginInfo;
         });
 
-        this.newGame();
+        if(!this.loginInfo) {
+            this.router.navigate(['welcome']);
+        } else {
+            this.gameSubscription = this.playService.getGameSubscription();
+
+            this.gameSubscription.subscribe((game: Game)=> {
+                this.onGameUpdate(game);
+            });
+            this.newGame();
+        }
     }
 
     selectTile(tileIndex: number) {
@@ -84,7 +91,7 @@ export class PlayComponent  implements OnInit {
             this.snackBarRef.dismiss();
         }
 
-        this.playService.start(this.username);
+        this.playService.start(this.loginInfo.username);
     }
 
 

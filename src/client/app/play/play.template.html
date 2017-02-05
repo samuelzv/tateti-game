@@ -17,6 +17,6 @@
             <button [disabled]="game.isPristine" md-raised-button  [ngClass]="{'md-primary': game.playState === EnumPlayState.GAME_OVER}"
                     (click)="newGame()">{{titleAction}}</button>
         </div>
-        <tate-score [username]="username"></tate-score>
+        <tate-score [username]="loginInfo?.username"></tate-score>
     </md-card-actions>
 </md-card>
