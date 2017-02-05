@@ -9,7 +9,8 @@ export interface Game {
   tiles: Tile[],
   turn: Contender,
   playState: PlayState
-  winner: Winner
+  winner: Winner,
+  isPristine: boolean
 }
 
 export interface GameAlgorithm {

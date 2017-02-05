@@ -16,12 +16,13 @@ import { Game } from './../shared/interfaces';
 })
 export class PlayComponent  implements OnInit {
     titleStatus: string;
+    titleAction: string;
     fixedRowHeight = 100;
     gameSubscription: any;
     game: Game;
-    gameOver: boolean;
     snackBarRef: MdSnackBarRef<any>;
     username: string;
+    EnumPlayState: any = PlayState;
 
     constructor(public loginService: LoginService,
                 public router: Router,
@@ -53,11 +54,10 @@ export class PlayComponent  implements OnInit {
 
     onGameUpdate(game: Game) {
         this.game = game;
-        this.titleStatus = (this.game.turn === Contender.COMPUTER) ? 'Computer thinking' : 'Your turn';
 
         if(this.game.winner !== Winner.NOT_YET) {
             this.titleStatus = 'Game Over';
-            this.gameOver = true;
+            this.titleAction = 'New game';
 
             let toastMessage = '';
             switch(this.game.winner) {
@@ -74,12 +74,14 @@ export class PlayComponent  implements OnInit {
                     break;
             }
             this.snackBarRef =this.snackBar.open(toastMessage);
+        }else {
+            this.titleStatus = (this.game.turn === Contender.COMPUTER) ? 'Computer thinking' : 'Your turn';
         }
     }
 
     newGame() {
         // cleanup
-        this.gameOver = false;
+        this.titleAction = 'Reset game';
         if(this.snackBarRef) {
             this.snackBarRef.dismiss();
         }

@@ -1,19 +1,22 @@
 <md-card class="tateti-play">
 
-    <md-card-title>{{titleStatus}}</md-card-title>
+    <md-card-title class="game-status">{{titleStatus}}</md-card-title>
 
     <md-card-content class="">
         <md-grid-list class="board" cols="3" [rowHeight]="fixedRowHeight" gutterSize="4px">
             <md-grid-tile  *ngFor="let tile of game?.tiles; let tileIndex = index"
                           (click)="selectTile(tileIndex)">
                 <div  class="board__tile md-headline"
-                     [ngClass]="{'board__tile--not-used': !tile.value, 'board__tile--used': tile.value || gameOver, 'board__tile--winner': tile.isWinnerTile }" >{{tile.value}}</div>
+                     [ngClass]="{'board__tile--not-used': !tile.value, 'board__tile--used': tile.value || game.playState === EnumPlayState.GAME_OVER, 'board__tile--winner': tile.isWinnerTile }" >{{tile.value}}</div>
             </md-grid-tile>
         </md-grid-list>
     </md-card-content>
 
     <md-card-actions>
-        <button md-raised-button  class="md-primary" (click)="newGame()">New game</button>
+        <div *ngIf="!game.isPristine" class="actions">
+            <button md-raised-button  [ngClass]="{'md-primary': game.playState === EnumPlayState.GAME_OVER}"
+                    (click)="newGame()">{{titleAction}}</button>
+        </div>
         <tate-score [username]="username"></tate-score>
     </md-card-actions>
 </md-card>

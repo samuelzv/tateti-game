@@ -36,7 +36,8 @@ export class PlayService implements OnInit {
       tiles: arr.map(()=><Tile>{value:PlayItemValue.UNSET, isWinnerTile: false}),
       turn: Contender.PERSON,
       playState: PlayState.PLAYING,
-      winner: Winner.NOT_YET
+      winner: Winner.NOT_YET,
+      isPristine: true
     };
 
     return game;
@@ -113,7 +114,7 @@ export class PlayService implements OnInit {
       // move to nex turn
       turn = (turn === Contender.PERSON) ? Contender.COMPUTER : Contender.PERSON;
     }
-    this.setState({tiles, playState, turn, winner});
+    this.setState({tiles, playState, turn, winner, isPristine: false});
   }
 
   isAllTilesTaken(tiles:Tile[]): boolean {
