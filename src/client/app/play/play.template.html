@@ -13,8 +13,8 @@
     </md-card-content>
 
     <md-card-actions>
-        <div *ngIf="!game.isPristine" class="actions">
-            <button md-raised-button  [ngClass]="{'md-primary': game.playState === EnumPlayState.GAME_OVER}"
+        <div class="actions">
+            <button [disabled]="game.isPristine" md-raised-button  [ngClass]="{'md-primary': game.playState === EnumPlayState.GAME_OVER}"
                     (click)="newGame()">{{titleAction}}</button>
         </div>
         <tate-score [username]="username"></tate-score>

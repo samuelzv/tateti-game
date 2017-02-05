@@ -17,6 +17,8 @@ import { LoginService } from './../shared/loggin.service';
 import { PlayService } from './../play/play.service';
 import { BasicAlgorithmService } from './../play/basic-algorithm.service';
 import { ScoreService } from './../shared/score.service';
+import { StorageService } from './../shared/storage.service';
+import { LocalStorageService } from './../shared/local-storage.service';
 
 const appRoutes: Routes = [
   {
@@ -42,7 +44,9 @@ const appRoutes: Routes = [
     LoginService,
     PlayService,
     BasicAlgorithmService,
-    ScoreService
+    ScoreService,
+    LocalStorageService,
+    StorageService
   ],
   imports:      [
     BrowserModule,

@@ -62,11 +62,11 @@ export class PlayService implements OnInit {
 
 
   checkIfWin(tiles:Tile[], turn:Contender): number[] {
-    let winnerCombination: number[];
+    let winnerCombination: number[] = [];
     let winCombinations = [
       [0,1,2],[3,4,5],[6,7,8], /*horizontal*/
       [0,3,6],[1,4,7],[2,5,8], /* vertical */
-      [0,4,8], [2,4,6]         /* diagonal*/
+      [0,4,8],[2,4,6]           /* diagonal*/
     ];
 
     let searchedValue = (turn === Contender.COMPUTER) ? PlayItemValue.COMPUTER : PlayItemValue.PERSON;

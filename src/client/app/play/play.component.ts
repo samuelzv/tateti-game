@@ -35,9 +35,7 @@ export class PlayComponent  implements OnInit {
             this.router.navigate(['register']);
         }
         this.username = this.loginService.getUsername();
-
         this.gameSubscription = this.playService.getGameSubscription();
-
 
         this.gameSubscription.subscribe((game: Game)=> {
             this.onGameUpdate(game);
@@ -75,7 +73,7 @@ export class PlayComponent  implements OnInit {
             }
             this.snackBarRef =this.snackBar.open(toastMessage);
         }else {
-            this.titleStatus = (this.game.turn === Contender.COMPUTER) ? 'Computer thinking' : 'Your turn';
+            this.titleStatus = (this.game.turn === Contender.COMPUTER) ? 'Thinking...' : 'Your turn';
         }
     }
 

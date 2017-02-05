@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
+import { StorageService } from './storage.service';
+
 const USER_NAME_KEY = 'username';
 
 @Injectable()
 export class LoginService {
-  private storage;
 
-  constructor() {
-    this.storage = localStorage;
+  constructor(private storageService: StorageService) {
   }
 
   isLoggedin() {
@@ -15,16 +15,15 @@ export class LoginService {
   }
 
   login(username) {
-    this.storage.setItem(USER_NAME_KEY, username);
+    this.storageService.save(USER_NAME_KEY, username);
     return Promise.resolve(true);
   }
 
   getUsername(): string {
-    return this.storage.getItem(USER_NAME_KEY);
+    return this.storageService.get(USER_NAME_KEY);
   }
 
   logout() {
-    this.storage.removeItem(USER_NAME_KEY)
   }
 
 }

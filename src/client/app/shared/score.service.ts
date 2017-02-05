@@ -3,17 +3,16 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Winner } from './../shared/constants';
 import { RecordScore } from './../shared/interfaces';
+import { StorageService } from './storage.service';
 
 const SCORE_KEY = 'score';
 
 @Injectable()
 export class ScoreService {
-  storage:any = null;
   score: RecordScore[];
   subject: BehaviorSubject<RecordScore[]>;
 
-  constructor() {
-    this.storage = localStorage;
+  constructor(private storageService: StorageService) {
     this.score  = this.getScore();
     this.subject = new BehaviorSubject(this.score);
   }
@@ -42,7 +41,7 @@ export class ScoreService {
   }
 
   public getScore() : RecordScore[] {
-    let stringifyScore: string  = this.storage.getItem(SCORE_KEY);
+    let stringifyScore: string  = this.storageService.get(SCORE_KEY);
     let score: RecordScore[];
 
     if(stringifyScore) {
@@ -55,7 +54,7 @@ export class ScoreService {
   }
 
   private saveScore() {
-    this.storage.setItem(SCORE_KEY, JSON.stringify(this.score));
+    this.storageService.save(SCORE_KEY, JSON.stringify(this.score));
     this.publishChanges();
   }
 
