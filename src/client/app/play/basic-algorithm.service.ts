@@ -1,4 +1,4 @@
-import { Game, GameAlgorithm, Tile } from '../shared/interfaces';
+import { Game, GameAlgorithm, Tile } from '../shared/models/index';
 import { PlayItemValue } from '../shared/constants';
 
 export class BasicAlgorithmService  implements GameAlgorithm   {

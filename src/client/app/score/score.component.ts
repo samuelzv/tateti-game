@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { ScoreService } from './../shared/score.service';
-import { RecordScore } from './../shared/interfaces';
+import { RecordScore } from './../shared/models/index';
 
 @Component({
   selector: 'tate-score',

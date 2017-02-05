@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Winner } from './../shared/constants';
-import { RecordScore } from './../shared/interfaces';
+import { RecordScore } from './../shared/models/index';
 import { StorageService } from './storage.service';
 
 const SCORE_KEY = 'score';

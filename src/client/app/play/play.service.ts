@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
-import { Game, GameAlgorithm } from '../shared/interfaces';
+import { Game, GameAlgorithm, Tile } from '../shared/models/index';
 import { BasicAlgorithmService } from './basic-algorithm.service';
 import { ScoreService } from '../shared/score.service';
 
@@ -11,7 +11,6 @@ import {
   PlayItemValue,
   Winner
 } from './../shared/constants';
-import { Tile } from './../shared/interfaces';
 
 @Injectable()
 export class PlayService implements OnInit {

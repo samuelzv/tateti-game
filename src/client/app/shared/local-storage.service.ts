@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Storage } from './../shared/interfaces';
+import { Storage } from './../shared/models/index';
 
 @Injectable()
 export class LocalStorageService implements Storage {
