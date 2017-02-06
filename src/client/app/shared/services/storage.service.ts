@@ -16,4 +16,8 @@ export class StorageService {
     return true;
   }
 
+  delete(key:string) : boolean {
+    return this.storage.delete(key);
+  }
+
 }

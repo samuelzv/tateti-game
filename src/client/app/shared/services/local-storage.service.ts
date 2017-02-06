@@ -15,4 +15,9 @@ export class LocalStorageService implements Storage {
     return true;
   }
 
+  delete(key:string) : boolean {
+    localStorage.removeItem(key);
+    return true;
+  }
+
 }
