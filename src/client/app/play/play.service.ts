@@ -1,9 +1,11 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Action } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
-import { Game, GameAlgorithm, Tile } from '../shared/models/index';
+import { AppStore, Game, GameAlgorithm, Tile } from '../shared/models/index';
 import { BasicAlgorithmService } from './basic-algorithm.service';
 import { ScoreService } from '../shared/services/score.service';
+import { ACTIONS as GAME_ACTIONS} from '../shared/stores/game.store';
 
 import {
   Contender,
@@ -14,18 +16,13 @@ import {
 
 @Injectable()
 export class PlayService implements OnInit {
-  private subject: Subject<Game>;
-  private state: Game;
   private algorithm: GameAlgorithm;
-  private nextComputerMovement: any;
 
-  constructor(private scoreService: ScoreService) {
-    this.subject = new Subject();
+  constructor(private scoreService: ScoreService ) {
     this.algorithm = new BasicAlgorithmService();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   getInitialState(username: string): Game {
     let arr = Array(9).fill(null);
@@ -42,25 +39,12 @@ export class PlayService implements OnInit {
     return game;
   }
 
-  getGameSubscription(): Subject<Game> {
-    return this.subject;
+  selectTile(tileIndex: number, game: Game): Action {
+      tileIndex = (game.turn === Contender.PERSON) ?  tileIndex : this.algorithm.chooseTile(game);
+      return this.takeTile(tileIndex, game);
   }
 
-  start(username: string): void {
-    if(this.nextComputerMovement) { clearTimeout(this.nextComputerMovement); }
-
-    this.state = this.getInitialState(username);
-    this.subject.next(this.state);
-  }
-
-  setState(newState: any): void {
-    this.state =  Object.assign({}, this.state, newState);
-    this.subject.next(this.state);
-  }
-
-
-
-  checkIfWin(tiles:Tile[], turn:Contender): number[] {
+  private checkIfWin(tiles:Tile[], turn:Contender): number[] {
     let winnerCombination: number[] = [];
     let winCombinations = [
       [0,1,2],[3,4,5],[6,7,8], /*horizontal*/
@@ -68,7 +52,7 @@ export class PlayService implements OnInit {
       [0,4,8],[2,4,6]           /* diagonal*/
     ];
 
-    let searchedValue = (turn === Contender.COMPUTER) ? PlayItemValue.COMPUTER : PlayItemValue.PERSON;
+    let searchedValue = this.getTileValueByTurn(turn);
     let win = winCombinations.some((combination: number[])=> {
       winnerCombination = combination;
       return combination.every((index:number)=> tiles[index].value === searchedValue);
@@ -76,51 +60,40 @@ export class PlayService implements OnInit {
     return win ? winnerCombination : [];
   }
 
-  selectTile(tileIndex: number): void {
-    this.takeTile(tileIndex, PlayItemValue.PERSON);
-
-    this.nextComputerMovement =  setTimeout(()=> {
-      if(this.state.playState !== PlayState.GAME_OVER) {
-        this.takeTile(this.algorithm.chooseTile(this.state), PlayItemValue.COMPUTER);
-      }
-    }, 2000);
+  private getTileValueByTurn(turn: Contender) {
+    return (turn === Contender.PERSON)? PlayItemValue.PERSON : PlayItemValue.COMPUTER;
   }
 
-
-  takeTile(tileIndex, value: string) {
-    let winner:Winner = this.state.winner;
-    let tiles: Tile[] = [].concat(this.state.tiles);
-    let turn = this.state.turn;
-    let playState: PlayState = this.state.playState;
+  private takeTile(tileIndex, game: Game): Action {
+    let value = this.getTileValueByTurn(game.turn);
+    let winner:Winner = game.winner;
+    let tiles: Tile[] = [].concat(game.tiles);
+    let action: Action =  null;
 
     tiles[tileIndex].value = value;
+    let winnerTiles: number[] = this.checkIfWin(tiles, game.turn);
 
-    let winnerTiles: number[] = this.checkIfWin(tiles, turn);
     if(winnerTiles.length) {
       // mark winner tiles
       winnerTiles.forEach((index: number)=> tiles[index].isWinnerTile = true );
       // who is the winner
-      winner = (turn === Contender.PERSON) ? Winner.PERSON : Winner.COMPUTER;
-      // game over
-      playState = PlayState.GAME_OVER;
-      this.scoreService.increment(this.state.username, winner);
+      winner = (game.turn === Contender.PERSON) ? Winner.PERSON : Winner.COMPUTER;
+      this.scoreService.increment(game.username, winner);
+      action = {type:GAME_ACTIONS.WIN, payload: {tiles}};
     } else {
       if(this.isAllTilesTaken(tiles)) {
-        playState = PlayState.GAME_OVER;
-        winner = Winner.TIE;
-        this.scoreService.increment(this.state.username, winner);
+        this.scoreService.increment(game.username, Winner.TIE);
+        action = {type: GAME_ACTIONS.TIE, payload:{}};
+      } else {
+        action = {type: GAME_ACTIONS.MOVE, payload:{}};
       }
-      // move to nex turn
-      turn = (turn === Contender.PERSON) ? Contender.COMPUTER : Contender.PERSON;
     }
-    this.setState({tiles, playState, turn, winner, isPristine: false});
+    return action;
   }
 
-  isAllTilesTaken(tiles:Tile[]): boolean {
+  private isAllTilesTaken(tiles:Tile[]): boolean {
     let unsetTiles = tiles.filter((tile:Tile) => tile.value === PlayItemValue.UNSET );
     return unsetTiles.length == 0;
   }
-
-
 
 }
