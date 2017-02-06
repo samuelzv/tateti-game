@@ -23,6 +23,7 @@ import { LocalStorageService } from './../shared/services/local-storage.service'
 
 // stores
 import { login } from './../shared/stores/loggin.store';
+import { game } from './../shared/stores/game.store';
 
 const appRoutes: Routes = [
   {
@@ -57,7 +58,7 @@ const appRoutes: Routes = [
     FormsModule,
     MaterialModule.forRoot(),
     RouterModule.forRoot(appRoutes),
-    StoreModule.provideStore( { login } )
+    StoreModule.provideStore( { login, game } )
   ],
   declarations: [
     MainComponent,

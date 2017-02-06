@@ -2,16 +2,16 @@ import { ActionReducer, Action } from '@ngrx/store';
 import { LoginInfo } from './../models/login-info.model';
 
 export const ACTIONS = {
-  LOGGED_IN: 'LOGGED-IN',
-  LOGGED_OUT: 'LOGGED-OUT'
+  LOGIN: 'LOGIN',
+  LOGOUT: 'LOGOUT'
 };
 
-export const login = (state: any = null, action: Action ): LoginInfo => {
+export const login = (state: LoginInfo = null, action: Action ): LoginInfo => {
   switch (action.type) {
-    case ACTIONS.LOGGED_IN:
+    case ACTIONS.LOGIN:
       return Object.assign({}, action.payload);
 
-    case ACTIONS.LOGGED_OUT:
+    case ACTIONS.LOGOUT:
       return null;
 
     default:

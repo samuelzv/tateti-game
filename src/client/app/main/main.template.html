@@ -1,14 +1,10 @@
-<md-sidenav-container class="tate-main">
-    <md-sidenav #start (open)="closeStartButton.focus()" opened="false">
-        Start Sidenav.
-        <br>
-        <button md-button #closeStartButton (click)="start.close()">Close</button>
-    </md-sidenav>
-    <div class="main">
-        <!--
-        My regular content. This will be moved into the proper DOM at runtime.
-        <button md-button (click)="start.open()">Open start sidenav</button>
-        -->
+<div class="tate-main">
+    <div class="toolbar">
+        <div class="toolbar__username">{{state.login?.username}}</div>
+        <button *ngIf="state.login?.username" md-raised-button (click)="logout()">Logout</button>
+    </div>
+    <div class="routes">
         <router-outlet></router-outlet>
     </div>
-</md-sidenav-container>
+</div>
+
