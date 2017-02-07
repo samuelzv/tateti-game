@@ -70,6 +70,11 @@ export class PlayService implements OnInit {
     let tiles: Tile[] = [].concat(game.tiles);
     let action: Action =  null;
 
+    if(game.playState === PlayState.GAME_OVER) {
+      return null;
+    }
+
+
     tiles[tileIndex].value = value;
     let winnerTiles: number[] = this.checkIfWin(tiles, game.turn);
 

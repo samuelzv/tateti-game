@@ -50,14 +50,25 @@ export class PlayComponent  implements OnInit {
 
     selectTile(tileIndex: number) {
        let action:Action = this.playService.selectTile(tileIndex, this.game);
-       this.store.dispatch(action);
+        if(action) {
+            this.store.dispatch(action);
+        }
 
        this.nextComputerMovement =  setTimeout(()=> {
            if(this.game.playState !== PlayState.GAME_OVER) {
                let action:Action = this.playService.selectTile(null, this.game);
-               this.store.dispatch(action);
+               if(action) {
+                   this.store.dispatch(action);
+               }
            }
        }, 2000);
+    }
+
+    clearNextMovement() {
+        if(this.nextComputerMovement) {
+            clearTimeout(this.nextComputerMovement);
+            this.nextComputerMovement = null;
+        }
     }
 
     onGameUpdate(game: Game) {
@@ -71,11 +82,7 @@ export class PlayComponent  implements OnInit {
         }
 
         if(this.game.winner !== Winner.NOT_YET) {
-            if(this.nextComputerMovement) {
-                clearTimeout(this.nextComputerMovement);
-                this.nextComputerMovement = null;
-            }
-
+            this.clearNextMovement();
             this.titleStatus = 'Game Over';
             this.titleAction = 'New game';
 
@@ -106,6 +113,7 @@ export class PlayComponent  implements OnInit {
     }
 
     newGame() {
+        this.clearNextMovement();
         this.store.dispatch({
             type: GAME_ACTIONS.NEW,
             payload: this.playService.getInitialState(this.state.login.username)
