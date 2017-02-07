@@ -1,4 +1,4 @@
-# TIC-TAC-TOE GAME 
+# Tic-tac-toe Game
 Demo App implementing Tic tac toe game using Angular2
 
 ## Prerequisites
