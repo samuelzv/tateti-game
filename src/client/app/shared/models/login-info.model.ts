@@ -1,4 +1,4 @@
 export interface LoginInfo {
-  username : string,
-  lastLogin: any
+  username: string;
+  lastLogin: any;
 }

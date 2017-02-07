@@ -14,7 +14,7 @@ let tsProject = ts.createProject(path.join(CONFIGURATION.paths.src.client, 'tsco
 /**
  * Compile typescript sources to distribution dir
  */
-gulp.task('dev.client.typescript', 'Compile typescript sources to build dir', [], () => {
+gulp.task('dev.client.typescript', 'Compile typescript sources to build dir', ['dev.client.typelint'], () => {
   let dest = CONFIGURATION.paths.dist.client;
 
   return gulp.src(CONFIGURATION.paths.src.clientTypeScriptDev,

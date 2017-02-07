@@ -4,7 +4,7 @@ import { Contender, PlayState, Winner } from './../../shared/constants';
 
 export const ACTIONS = {
   NEW:  'GAME-NEW',
-  RESET:'GAME-RESET',
+  RESET: 'GAME-RESET',
   WIN:  'GAME-WIN',
   TIE: 'GAME-TIE',
   MOVE: 'GAME-MOVE'

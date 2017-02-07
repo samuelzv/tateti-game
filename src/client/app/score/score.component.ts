@@ -22,17 +22,17 @@ export class ScoreComponent implements OnInit {
     this.scoreSubscription = this.scoreService.getScoreSubscription();
 
     // if we are displaying info related to only one person
-    if(this.username) {
-      this.scoreSubscription = this.scoreSubscription.map((score:RecordScore[])=> {
-        let userRecord: RecordScore[] = score.filter((record: RecordScore)=>  record.username ===  this.username);
-        if(!userRecord.length) {
+    if (this.username) {
+      this.scoreSubscription = this.scoreSubscription.map((score: RecordScore[]) => {
+        let userRecord: RecordScore[] = score.filter((record: RecordScore) =>  record.username ===  this.username);
+        if (!userRecord.length) {
           userRecord.push(this.scoreService.getEmptyRecord(this.username));
         }
         return userRecord;
       });
     }
 
-    this.scoreSubscription.subscribe((score: RecordScore[])=> {
+    this.scoreSubscription.subscribe((score: RecordScore[]) => {
       this.onScoreUpdate(score);
     });
 

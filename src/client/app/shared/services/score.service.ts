@@ -28,7 +28,7 @@ export class ScoreService {
   public increment(username: string, winner: Winner) {
     let userRecord = this.getUserRecord(username);
 
-    if(!userRecord) {
+    if (!userRecord) {
       userRecord = this.getEmptyRecord(username);
       this.score.push(userRecord);
     }
@@ -40,11 +40,11 @@ export class ScoreService {
     this.saveScore();
   }
 
-  public getScore() : RecordScore[] {
+  public getScore(): RecordScore[] {
     let stringifyScore: string  = this.storageService.get(SCORE_KEY);
     let score: RecordScore[];
 
-    if(stringifyScore) {
+    if (stringifyScore) {
       score = JSON.parse(stringifyScore);
     } else {
       score = [];
@@ -60,10 +60,10 @@ export class ScoreService {
 
   public getUserRecord(username: string): RecordScore {
     this.score = this.score || this.getScore();
-    return this.score.find((record:RecordScore)=> record.username === username);
+    return this.score.find((record: RecordScore) => record.username === username);
   }
 
-  public getEmptyRecord(username:string): RecordScore {
+  public getEmptyRecord(username: string): RecordScore {
     return <RecordScore>{ username, won: 0, tied: 0, lost: 0 };
   }
 

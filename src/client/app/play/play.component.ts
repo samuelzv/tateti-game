@@ -24,7 +24,6 @@ export class PlayComponent  implements OnInit {
     titleStatus: string;
     titleAction: string;
     fixedRowHeight = 100;
-    //gameSubscription: any;
     game: Game;
     snackBarRef: MdSnackBarRef<any>;
     EnumPlayState: any = PlayState;
@@ -34,11 +33,11 @@ export class PlayComponent  implements OnInit {
                 public snackBar: MdSnackBar,
                 private store: Store<AppStore>) {
         this.state = { login: null, game: null};
-        store.select('login').subscribe((loginInfo: LoginInfo)=> {
+        store.select('login').subscribe((loginInfo: LoginInfo) => {
             this.state.login = loginInfo;
         });
 
-        store.select('game').subscribe((game: Game)=> {
+        store.select('game').subscribe((game: Game) => {
             this.onGameUpdate(game);
         });
 
@@ -49,15 +48,15 @@ export class PlayComponent  implements OnInit {
     }
 
     selectTile(tileIndex: number) {
-       let action:Action = this.playService.selectTile(tileIndex, this.game);
-        if(action) {
+       let action: Action = this.playService.selectTile(tileIndex, this.game);
+        if (action) {
             this.store.dispatch(action);
         }
 
-       this.nextComputerMovement =  setTimeout(()=> {
-           if(this.game.playState !== PlayState.GAME_OVER) {
-               let action:Action = this.playService.selectTile(null, this.game);
-               if(action) {
+       this.nextComputerMovement =  setTimeout(() => {
+           if (this.game.playState !== PlayState.GAME_OVER) {
+               let action: Action = this.playService.selectTile(null, this.game);
+               if (action) {
                    this.store.dispatch(action);
                }
            }
@@ -65,29 +64,29 @@ export class PlayComponent  implements OnInit {
     }
 
     clearNextMovement() {
-        if(this.nextComputerMovement) {
+        if (this.nextComputerMovement) {
             clearTimeout(this.nextComputerMovement);
             this.nextComputerMovement = null;
         }
     }
 
     onGameUpdate(game: Game) {
-        if(!game) { return; }
+        if (!game) { return; }
 
         this.game = game;
 
         this.titleAction = 'Reset game';
-        if(game.isPristine) {
+        if (game.isPristine) {
             this.cleanup();
         }
 
-        if(this.game.winner !== Winner.NOT_YET) {
+        if (this.game.winner !== Winner.NOT_YET) {
             this.clearNextMovement();
             this.titleStatus = 'Game Over';
             this.titleAction = 'New game';
 
             let toastMessage = '';
-            switch(this.game.winner) {
+            switch (this.game.winner) {
                 case Winner.COMPUTER:
                     toastMessage = 'You lose';
                     break;
@@ -100,14 +99,14 @@ export class PlayComponent  implements OnInit {
                     toastMessage = 'Tie';
                     break;
             }
-            this.snackBarRef =this.snackBar.open(toastMessage);
+            this.snackBarRef = this.snackBar.open(toastMessage);
         }else {
             this.titleStatus = (this.game.turn === Contender.COMPUTER) ? 'Thinking...' : 'Your turn';
         }
     }
 
     cleanup() {
-        if(this.snackBarRef) {
+        if (this.snackBarRef) {
             this.snackBarRef.dismiss();
         }
     }

@@ -4,11 +4,11 @@ import { PlayItemValue } from '../shared/constants';
 export class BasicAlgorithmService  implements GameAlgorithm   {
   constructor() {}
 
-  public chooseTile(game:Game): number {
+  public chooseTile(game: Game): number {
     let availableIndexes = [];
 
-    game.tiles.forEach((tile: Tile, index)=> {
-      if(tile.value === PlayItemValue.UNSET) {
+    game.tiles.forEach((tile: Tile, index) => {
+      if (tile.value === PlayItemValue.UNSET) {
         availableIndexes.push(index);
       }
     });
@@ -17,7 +17,7 @@ export class BasicAlgorithmService  implements GameAlgorithm   {
     return availableIndexes[selectedIndex];
   }
 
-  private getRandomInteger(min : number, max : number): number {
+  private getRandomInteger(min: number, max: number): number {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;

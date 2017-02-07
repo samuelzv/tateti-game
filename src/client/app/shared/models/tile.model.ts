@@ -1,4 +1,4 @@
 export interface Tile {
-  value: string,
-  isWinnerTile: boolean
+  value: string;
+  isWinnerTile: boolean;
 }

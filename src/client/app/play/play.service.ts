@@ -29,7 +29,7 @@ export class PlayService implements OnInit {
 
     let game: Game = {
       username,
-      tiles: arr.map(()=><Tile>{value:PlayItemValue.UNSET, isWinnerTile: false}),
+      tiles: arr.map(() => <Tile>{value: PlayItemValue.UNSET, isWinnerTile: false}),
       turn: Contender.PERSON,
       playState: PlayState.PLAYING,
       winner: Winner.NOT_YET,
@@ -44,33 +44,33 @@ export class PlayService implements OnInit {
       return this.takeTile(tileIndex, game);
   }
 
-  private checkIfWin(tiles:Tile[], turn:Contender): number[] {
+  private checkIfWin(tiles: Tile[], turn: Contender): number[] {
     let winnerCombination: number[] = [];
     let winCombinations = [
-      [0,1,2],[3,4,5],[6,7,8], /*horizontal*/
-      [0,3,6],[1,4,7],[2,5,8], /* vertical */
-      [0,4,8],[2,4,6]           /* diagonal*/
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], /*horizontal*/
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], /* vertical */
+      [0, 4, 8], [2, 4, 6]           /* diagonal*/
     ];
 
     let searchedValue = this.getTileValueByTurn(turn);
-    let win = winCombinations.some((combination: number[])=> {
+    let win = winCombinations.some((combination: number[]) => {
       winnerCombination = combination;
-      return combination.every((index:number)=> tiles[index].value === searchedValue);
+      return combination.every((index: number) => tiles[index].value === searchedValue);
     });
     return win ? winnerCombination : [];
   }
 
   private getTileValueByTurn(turn: Contender) {
-    return (turn === Contender.PERSON)? PlayItemValue.PERSON : PlayItemValue.COMPUTER;
+    return (turn === Contender.PERSON) ? PlayItemValue.PERSON : PlayItemValue.COMPUTER;
   }
 
   private takeTile(tileIndex, game: Game): Action {
     let value = this.getTileValueByTurn(game.turn);
-    let winner:Winner = game.winner;
+    let winner: Winner = game.winner;
     let tiles: Tile[] = [].concat(game.tiles);
     let action: Action =  null;
 
-    if(game.playState === PlayState.GAME_OVER) {
+    if (game.playState === PlayState.GAME_OVER) {
       return null;
     }
 
@@ -78,27 +78,27 @@ export class PlayService implements OnInit {
     tiles[tileIndex].value = value;
     let winnerTiles: number[] = this.checkIfWin(tiles, game.turn);
 
-    if(winnerTiles.length) {
+    if (winnerTiles.length) {
       // mark winner tiles
-      winnerTiles.forEach((index: number)=> tiles[index].isWinnerTile = true );
+      winnerTiles.forEach((index: number) => tiles[index].isWinnerTile = true );
       // who is the winner
       winner = (game.turn === Contender.PERSON) ? Winner.PERSON : Winner.COMPUTER;
       this.scoreService.increment(game.username, winner);
-      action = {type:GAME_ACTIONS.WIN, payload: {tiles}};
+      action = {type: GAME_ACTIONS.WIN, payload: {tiles}};
     } else {
-      if(this.isAllTilesTaken(tiles)) {
+      if (this.isAllTilesTaken(tiles)) {
         this.scoreService.increment(game.username, Winner.TIE);
-        action = {type: GAME_ACTIONS.TIE, payload:{}};
+        action = {type: GAME_ACTIONS.TIE, payload: {}};
       } else {
-        action = {type: GAME_ACTIONS.MOVE, payload:{}};
+        action = {type: GAME_ACTIONS.MOVE, payload: {}};
       }
     }
     return action;
   }
 
-  private isAllTilesTaken(tiles:Tile[]): boolean {
-    let unsetTiles = tiles.filter((tile:Tile) => tile.value === PlayItemValue.UNSET );
-    return unsetTiles.length == 0;
+  private isAllTilesTaken(tiles: Tile[]): boolean {
+    let unsetTiles = tiles.filter((tile: Tile) => tile.value === PlayItemValue.UNSET );
+    return unsetTiles.length === 0;
   }
 
 }

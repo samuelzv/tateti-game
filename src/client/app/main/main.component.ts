@@ -13,7 +13,7 @@ import {LoginInfo, AppStore} from "../shared/models/index";
   styleUrls: ['main.component.css']
 })
 export class MainComponent  {
-  observers : {
+  observers: {
     login: Observable<LoginInfo>
   };
   state: {
@@ -30,10 +30,10 @@ export class MainComponent  {
       login: null
     };
 
-    this.observers.login.subscribe((loginInfo: LoginInfo)=> {
+    this.observers.login.subscribe((loginInfo: LoginInfo) => {
       this.state.login = loginInfo;
 
-      if(!loginInfo) {
+      if (!loginInfo ) {
         this.router.navigate(['welcome']);
       }
     });

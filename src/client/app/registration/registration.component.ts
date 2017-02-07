@@ -16,7 +16,7 @@ export class RegistrationComponent  {
 
     register() {
         this.loginService.login(this.username)
-          .then((success)=> this.router.navigate(['play']));
+          .then((success) => this.router.navigate(['play']));
     }
 
 }

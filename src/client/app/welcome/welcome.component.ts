@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { LoginService } from './../shared/services/loggin.service';
-import { AppStore, LoginInfo } from './../shared/models/index'
+import { AppStore, LoginInfo } from './../shared/models/index';
 
 @Component({
     selector: 'tate-welcome',
@@ -19,14 +19,13 @@ export class WelcomeComponent  {
     constructor(private router: Router,
                 private store: Store<AppStore>,
                 private loginService: LoginService) {
-
-        store.select('login').subscribe((loginInfo: LoginInfo)=> {
-            this.state = {login : loginInfo}
+        store.select('login').subscribe((loginInfo: LoginInfo) => {
+            this.state = {login : loginInfo};
         });
 
         // try to get the username of the storage
         let username = this.loginService.getUsername();
-        if(username) {
+        if (username) {
             this.loginService.login(username);
         }
     }
@@ -34,7 +33,7 @@ export class WelcomeComponent  {
     play() {
         let route: string = 'play';
 
-        if(!this.state.login) {
+        if (!this.state.login) {
             route = 'register';
         }
 

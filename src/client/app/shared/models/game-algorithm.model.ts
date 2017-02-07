@@ -1,5 +1,5 @@
 import { Game } from './game.model';
 
 export interface GameAlgorithm {
-  chooseTile(game: Game): number
+  chooseTile(game: Game): number;
 }

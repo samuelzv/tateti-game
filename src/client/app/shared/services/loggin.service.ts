@@ -16,7 +16,7 @@ export class LoginService {
   login(username) {
     this.storageService.save(USER_NAME_KEY, username);
 
-    let action = <Action>{type:ACTIONS.LOGIN, payload: <LoginInfo>{username, lastLogin: new Date()} };
+    let action = <Action>{type: ACTIONS.LOGIN, payload: <LoginInfo>{username, lastLogin: new Date()} };
     this.store.dispatch(action);
 
     return Promise.resolve(true);
@@ -28,7 +28,7 @@ export class LoginService {
 
   logout() {
     this.storageService.delete(USER_NAME_KEY);
-    let action = <Action>{type:ACTIONS.LOGOUT} ;
+    let action = <Action>{type: ACTIONS.LOGOUT} ;
     this.store.dispatch(action);
   }
 

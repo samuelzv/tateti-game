@@ -6,16 +6,16 @@ import { Storage } from './../models/index';
 export class LocalStorageService implements Storage {
   constructor() {}
 
-  get(key:string ) : any {
+  get(key: string): any {
     return localStorage.getItem(key);
   }
 
-  save(key:string, item: any) : boolean {
+  save(key: string, item: any): boolean {
     localStorage.setItem(key, item);
     return true;
   }
 
-  delete(key:string) : boolean {
+  delete(key: string): boolean {
     localStorage.removeItem(key);
     return true;
   }
