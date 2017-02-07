@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {MdSnackBar, MdSnackBarRef} from '@angular/material';
 import { Store, Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
 import { PlayService } from './play.service';
 import { Contender, PlayState, Winner } from './../shared/constants';
@@ -22,7 +21,6 @@ export class PlayComponent  implements OnInit {
         game: Game
     };
     private nextComputerMovement: any;
-    //loginInfo: LoginInfo;
     titleStatus: string;
     titleAction: string;
     fixedRowHeight = 100;
@@ -30,21 +28,12 @@ export class PlayComponent  implements OnInit {
     game: Game;
     snackBarRef: MdSnackBarRef<any>;
     EnumPlayState: any = PlayState;
-    //observers:{
-    //    login : Observable<LoginInfo>,
-    //    game  : Observable<Game>
-    //};
 
     constructor(public router: Router,
                 public playService: PlayService,
                 public snackBar: MdSnackBar,
                 private store: Store<AppStore>) {
         this.state = { login: null, game: null};
-        //this.observers = {
-        //    login: store.select('login'),
-        //    game: store.select('game')
-        //};
-
         store.select('login').subscribe((loginInfo: LoginInfo)=> {
             this.state.login = loginInfo;
         });
@@ -56,16 +45,6 @@ export class PlayComponent  implements OnInit {
     }
 
     ngOnInit() {
-       /*
-        this.observers.login.subscribe((loginInfo: LoginInfo)=> {
-            this.state.login = loginInfo;
-        });
-
-        this.observers.game.subscribe((game: Game)=> {
-            this.onGameUpdate(game);
-        });
-        */
-
         this.newGame();
     }
 
