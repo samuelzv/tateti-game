@@ -33,9 +33,16 @@ gulp.task('dev', 'Build application in development mode', cb => {
   runSequence(
     'cleanup',
      'dev.build',
-     'dev.watch',
     cb
   );
+});
+
+gulp.task('dev-watch', 'Build application in development mode and watch changes', [], cb => {
+  runSequence(
+    'dev.watch',
+    cb
+  );
+
 });
 
 
