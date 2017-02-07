@@ -41,6 +41,10 @@ export class PlayComponent  implements OnInit {
             this.onGameUpdate(game);
         });
 
+        router.events.subscribe(() => {
+            this.cleanNotification();
+        });
+
     }
 
     ngOnInit() {
@@ -77,7 +81,7 @@ export class PlayComponent  implements OnInit {
 
         this.titleAction = 'Reset game';
         if (game.isPristine) {
-            this.cleanup();
+            this.cleanNotification();
         }
 
         if (this.game.winner !== Winner.NOT_YET) {
@@ -105,7 +109,7 @@ export class PlayComponent  implements OnInit {
         }
     }
 
-    cleanup() {
+    cleanNotification() {
         if (this.snackBarRef) {
             this.snackBarRef.dismiss();
         }
