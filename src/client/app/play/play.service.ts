@@ -3,7 +3,7 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { AppStore, Game, GameAlgorithm, Tile } from '../shared/models/index';
-import { BasicAlgorithmService } from './basic-algorithm.service';
+import { BasicAlgorithmService } from './algorithm.service';
 import { ScoreService } from '../shared/services/score.service';
 import { ACTIONS as GAME_ACTIONS} from '../shared/stores/game.store';
 

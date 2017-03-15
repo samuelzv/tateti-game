@@ -1,5 +1,5 @@
 /**
- * System configuration for Ti Ta Te samples
+ * System configuration for Ti Ta Te
  * Adjust as necessary for your application needs.
  */
 (function (global) {

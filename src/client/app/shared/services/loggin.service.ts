@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, Action } from '@ngrx/store';
 
-import { StorageService } from './storage.service';
+import { DBService } from './db.service';
 import { ACTIONS } from './../stores/loggin.store';
 import { AppStore, LoginInfo } from './../models/index';
 
@@ -10,7 +10,7 @@ const USER_NAME_KEY = 'username';
 @Injectable()
 export class LoginService {
 
-  constructor(private storageService: StorageService, private store: Store<AppStore>) {
+  constructor(private storageService: DBService, private store: Store<AppStore>) {
   }
 
   login(username) {

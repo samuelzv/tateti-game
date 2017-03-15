@@ -1,6 +1,7 @@
 import gulp from 'gulp';
 import tslint from 'gulp-tslint';
 import changed from 'gulp-changed';
+import plumber from 'gulp-plumber';
 
 import {CONFIGURATION} from '../../configuration';
 
@@ -9,6 +10,7 @@ gulp.task('dev.client.typelint','Apply lint rules to typescript files', [], ()=>
   //.pipe(changed(dest))
 
   return gulp.src(CONFIGURATION.paths.src.clientTypeScriptDev, {cwd:CONFIGURATION.paths.src.client})
+    .pipe(plumber())
     .pipe(changed(dest))
     .pipe(tslint({
       configuration: "tslint.json",

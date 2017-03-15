@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Winner } from './../constants';
 import { RecordScore } from './../models/record-score.model';
-import { StorageService } from './storage.service';
+import { DBService } from './db.service';
 
 const SCORE_KEY = 'score';
 
@@ -12,7 +12,7 @@ export class ScoreService {
   score: RecordScore[];
   subject: BehaviorSubject<RecordScore[]>;
 
-  constructor(private storageService: StorageService) {
+  constructor(private storageService: DBService) {
     this.score  = this.getScore();
     this.subject = new BehaviorSubject(this.score);
   }

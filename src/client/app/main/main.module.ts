@@ -16,9 +16,9 @@ import { ScoreComponent } from './../score/score.component';
 // services
 import { LoginService } from './../shared/services/loggin.service';
 import { PlayService } from './../play/play.service';
-import { BasicAlgorithmService } from './../play/basic-algorithm.service';
+import { BasicAlgorithmService } from './../play/algorithm.service';
 import { ScoreService } from './../shared/services/score.service';
-import { StorageService } from './../shared/services/storage.service';
+import { DBService } from './../shared/services/db.service';
 import { LocalStorageService } from './../shared/services/local-storage.service';
 
 // stores
@@ -51,7 +51,7 @@ const appRoutes: Routes = [
     BasicAlgorithmService,
     ScoreService,
     LocalStorageService,
-    StorageService
+    DBService
   ],
   imports:      [
     BrowserModule,

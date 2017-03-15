@@ -42,4 +42,10 @@ export class MainComponent  {
   logout() {
     this.loginService.logout();
   }
+
+
+
+
+
 }
+

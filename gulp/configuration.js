@@ -21,7 +21,7 @@ export const CONFIGURATION = {
     },
     src: {
       client: path.join(src, 'client'),
-      clientConfiguration: ['karma*.js', 'systemjs.*.js', 'package.json'],
+      clientConfiguration: ['systemjs.*.js', 'package.json'],
       clientTypeScriptDev: ['**/*.ts', '!**/*.e2e.ts', '!main.aot.ts', '!node_modules/**/*.ts'],
       clientAssets: ['**/*', '!**/*.ts', '!**/*.js', '!**/*.less', '!**/*.js.map', '!**/node_modules/**'],
       clientStyles: ['{assets,app,common}/**/*.less', '!{assets,app,common}/**/_*.less'],
