@@ -1,6 +1,9 @@
 # Tic-tac-toe Game
 Demo App implementing Tic tac toe game using Angular2
 
+#Demo
+https://tateti-game.herokuapp.com
+
 ## Prerequisites
 
 - git
